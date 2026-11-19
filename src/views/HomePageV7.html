@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>魔方公式库</title>
+<script src="https://modao.cc/agent-py/static/source/js/tailwindcss.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    
+    body {
+        font-family: 'Noto Sans SC', sans-serif;
+        background-color: #E5E7EB;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .app-container {
+        width: 375px;
+        height: 812px;
+        background-color: #F8F6F3;
+        position: relative;
+        overflow: hidden;
+        border-radius: 40px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        border: 8px solid #3D3D3D;
+    }
+
+    .content-scroll::-webkit-scrollbar {
+        display: none;
+    }
+    .content-scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .bg-gradient-morandi {
+        background: linear-gradient(135deg, #88CAC0 0%, #88C4CC 100%);
+    }
+
+    .card-active:active {
+        transform: scale(0.97);
+        transition: transform 0.1s;
+    }
+
+    .tab-active {
+        color: #88C4CC;
+    }
+    .tab-active iconify-icon {
+        filter: drop-shadow(0 0 4px rgba(136, 196, 204, 0.5));
+    }
+</style>
+</head>
+<body>
+<div class="app-container flex flex-col">
+<!-- 状态栏模拟 -->
+<div class="h-11 w-full flex justify-between items-center px-8 pt-4 z-20">
+<span class="text-xs font-bold text-white">9:41</span>
+<div class="flex gap-1.5 items-center">
+<iconify-icon class="text-white text-sm" icon="solar:cellular-network-bold"></iconify-icon>
+<iconify-icon class="text-white text-sm" icon="solar:wifi-router-bold"></iconify-icon>
+<iconify-icon class="text-white text-lg" icon="solar:battery-charge-bold"></iconify-icon>
+</div>
+</div>
+<!-- 顶部标题栏 -->
+<div class="bg-gradient-morandi pt-12 pb-6 px-6 rounded-b-[32px] shadow-lg relative z-10">
+<div class="flex justify-between items-center">
+<h1 class="text-2xl font-bold text-white tracking-wide">魔方公式库</h1>
+<button class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex justify-center items-center text-white hover:bg-white/30 transition-all active:scale-90" onclick="alert('进入添加公式页面')">
+<iconify-icon icon="solar:add-circle-bold" style="font-size: 24px;"></iconify-icon>
+</button>
+</div>
+</div>
+<!-- 内容列表区 -->
+<div class="content-scroll flex-1 overflow-y-auto px-5 pt-6 pb-24">
+<div class="space-y-4">
+<!-- 卡片 1: F2L -->
+<div class="card-active bg-white p-4 rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex items-center group cursor-pointer">
+<div class="w-14 h-14 bg-[#F0F4F2] rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+<svg height="40" viewbox="0 0 40 40" width="40">
+<!-- 顶面：浅灰色 -->
+<polygon fill="#D0D0D0" points="20,6 34,15 20,24 6,15" stroke="#999" stroke-width="0.8"></polygon>
+<!-- 左面：魔方绿 -->
+<polygon fill="#4CAF50" points="6,15 20,24 20,38 6,29" stroke="#999" stroke-width="0.8"></polygon>
+<!-- 右面：魔方橙 -->
+<polygon fill="#FF9800" points="20,24 34,15 34,29 20,38" stroke="#999" stroke-width="0.8"></polygon>
+</svg>
+</div>
+<div class="flex-1">
+<h3 class="text-[#3D3D3D] font-bold text-lg">F2L</h3>
+<p class="text-[#8A8480] text-xs mt-0.5">First Two Layer</p>
+</div>
+<iconify-icon class="text-[#A8C9C6] text-xl" icon="solar:alt-arrow-right-linear"></iconify-icon>
+</div>
+<!-- 卡片 2: OLL -->
+<div class="card-active bg-white p-4 rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex items-center group cursor-pointer">
+<div class="w-14 h-14 bg-[#F0F4F2] rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+<svg height="40" viewbox="0 0 40 40" width="40">
+<!-- 顶面：魔方黄 -->
+<polygon fill="#FFD600" points="20,6 34,15 20,24 6,15" stroke="#999" stroke-width="0.8"></polygon>
+<!-- 左面：浅灰色 -->
+<polygon fill="#D0D0D0" points="6,15 20,24 20,38 6,29" stroke="#999" stroke-width="0.8"></polygon>
+<!-- 右面：浅灰色 -->
+<polygon fill="#C0C0C0" points="20,24 34,15 34,29 20,38" stroke="#999" stroke-width="0.8"></polygon>
+</svg>
+</div>
+<div class="flex-1">
+<h3 class="text-[#3D3D3D] font-bold text-lg">OLL</h3>
+<p class="text-[#8A8480] text-xs mt-0.5">Orientation of Last Layer</p>
+</div>
+<iconify-icon class="text-[#A8C9C6] text-xl" icon="solar:alt-arrow-right-linear"></iconify-icon>
+</div>
+<!-- 卡片 3: PLL -->
+<div class="card-active bg-white p-4 rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex items-center group cursor-pointer">
+<div class="w-14 h-14 bg-[#F0F4F2] rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+<svg height="40" viewbox="0 0 40 40" width="40">
+<!-- 顶面：魔方黄 -->
+<polygon fill="#FFD600" points="20,6 34,15 20,24 6,15" stroke="#999" stroke-width="0.8"></polygon>
+<!-- 左面：魔方红 -->
+<polygon fill="#F44336" points="6,15 20,24 20,38 6,29" stroke="#999" stroke-width="0.8"></polygon>
+<!-- 右面：魔方蓝 -->
+<polygon fill="#2196F3" points="20,24 34,15 34,29 20,38" stroke="#999" stroke-width="0.8"></polygon>
+</svg>
+</div>
+<div class="flex-1">
+<h3 class="text-[#3D3D3D] font-bold text-lg">PLL</h3>
+<p class="text-[#8A8480] text-xs mt-0.5">Permutation of Last Layer</p>
+</div>
+<iconify-icon class="text-[#A8C9C6] text-xl" icon="solar:alt-arrow-right-linear"></iconify-icon>
+</div>
+<!-- 底部留白 -->
+<div class="h-4"></div>
+</div>
+</div>
+<!-- 底部导航栏 -->
+<div class="absolute bottom-0 left-0 w-full bg-white/80 backdrop-blur-xl border-t border-[#F5F2EE] py-3 pb-8 flex items-stretch z-30">
+<button class="flex-1 flex flex-col items-center justify-center gap-1 tab-item tab-active" onclick="switchTab(this)">
+<iconify-icon class="text-2xl" icon="solar:home-smile-bold"></iconify-icon>
+<span class="text-[10px] font-medium">首页</span>
+</button>
+<button class="flex-1 flex flex-col items-center justify-center gap-1 tab-item text-[#B0A8A2]" onclick="switchTab(this)">
+<iconify-icon class="text-2xl" icon="solar:settings-linear"></iconify-icon>
+<span class="text-[10px] font-medium">设置</span>
+</button>
+</div>
+<!-- 底部安全区横条 -->
+<div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-[#3D3D3D]/10 rounded-xl z-40"></div>
+</div>
+<script>
+    function switchTab(element) {
+        const tabs = document.querySelectorAll('.tab-item');
+        tabs.forEach(tab => {
+            tab.classList.remove('tab-active');
+            tab.classList.add('text-[#B0A8A2]');
+            const icon = tab.querySelector('iconify-icon');
+            let iconName = icon.getAttribute('icon');
+            if (iconName.includes('-bold')) {
+                icon.setAttribute('icon', iconName.replace('-bold', '-linear'));
+            }
+        });
+
+        element.classList.remove('text-[#B0A8A2]');
+        element.classList.add('tab-active');
+        const activeIcon = element.querySelector('iconify-icon');
+        let activeIconName = activeIcon.getAttribute('icon');
+        if (activeIconName.includes('-linear')) {
+            activeIcon.setAttribute('icon', activeIconName.replace('-linear', '-bold'));
+        }
+    }
+
+    document.querySelectorAll('.card-active').forEach(card => {
+        card.addEventListener('click', function() {
+            const title = this.querySelector('h3').innerText;
+            console.log(`进入 ${title} 详情页`);
+        });
+    });
+</script>
+</body>
+</html>

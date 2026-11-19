@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">魔小库 CubeBase</string>
+    <string name="title_activity_main">魔小库 CubeBase</string>
+    <string name="package_name">com.formuladb.app</string>
+    <string name="custom_url_scheme">com.formuladb.app</string>
+</resources>

@@ -1,0 +1,585 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-brand: #165DFF;
+    --color-f2l: #2563EB;
+    --color-oll: #4F46E5;
+    --color-pll: #9333EA;
+    --color-page-bg: #F5F7FA;
+    --color-card-bg: #FFFFFF;
+    --color-text-primary: #1D2129;
+    --color-text-secondary: #4E5969;
+    --color-text-hint: #86909C;
+    --color-border: #E5E6EB;
+    --color-success: #00B42A;
+    --color-warning: #FF7D00;
+    --color-danger: #F53F3F;
+
+    /* 主题变量（默认青色主题） */
+    --theme-page-bg: #F8F6F3;
+    --theme-header-gradient: linear-gradient(135deg, #88CAC0 0%, #88C4CC 100%);
+    --theme-header-shadow: rgba(136, 196, 204, 0.25);
+    --theme-bottom-active-color: #88C4CC;
+    --theme-bottom-active-glow: rgba(136, 196, 204, 0.5);
+    --theme-header-text-color: white;
+    --theme-header-hover-bg: rgba(255, 255, 255, 0.15);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+    background-color: var(--color-page-bg);
+    color: var(--color-text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  #app {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* 当有壁纸时，app 容器背景透明 */
+  #app.has-wallpaper {
+    background-color: transparent;
+  }
+  
+  /* 无壁纸时使用默认背景 */
+  #app:not(.has-wallpaper) {
+    background-color: var(--color-page-bg);
+  }
+}
+
+@layer components {
+  .page-container {
+    padding: 16px;
+    padding-bottom: calc(56px + 12px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .page-container-with-bottom-nav {
+    margin-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+    /* 最后一张卡片下方预留空间：底部导航栏高度(56+12) + 两张卡片间距(24px) */
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px) + 24px);
+  }
+
+  .nav-bar {
+    height: calc(56px + var(--status-bar-height, 0px));
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    color: black;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .nav-bar-content {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: calc(var(--status-bar-height, 0px) / 2);
+  }
+
+  .nav-bar-title {
+    font-size: 18px;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .nav-bar-back,
+  .nav-bar-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    color: black;
+    transition: background-color 0.2s;
+  }
+
+  .nav-bar-back:hover,
+  .nav-bar-action:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    height: calc(56px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-top: 1px solid var(--color-border);
+    z-index: 50;
+  }
+
+  .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 12px;
+    color: var(--color-text-hint);
+    cursor: pointer;
+    padding: 4px 16px;
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+
+  .bottom-nav-item.active,
+  .bottom-nav-item.router-link-active {
+    color: var(--color-brand);
+  }
+
+  .add-btn {
+    border: 2px dashed var(--color-border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--color-text-hint);
+    cursor: pointer;
+    background: transparent;
+    width: 100%;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  .add-btn:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+  }
+
+  /* Tailwind 兼容类 */
+  .bg-page { background-color: var(--color-page-bg); }
+  .bg-card { background-color: var(--color-card-bg); }
+  .bg-brand { background-color: var(--color-brand); }
+  
+  .text-primary { color: var(--color-text-primary); }
+  .text-hint { color: var(--color-text-hint); }
+  .text-brand { color: var(--color-brand); }
+  .text-success { color: var(--color-success); }
+  .text-warning { color: var(--color-warning); }
+  .text-danger { color: var(--color-danger); }
+  
+  .hover\:text-brand:hover { color: var(--color-brand); }
+  .hover\:text-danger:hover { color: var(--color-danger); }
+  
+  .ring-brand { ring-color: var(--color-brand); }
+
+  /* ========== 统一页面布局系统 ========== */
+
+  /* 页面基础容器 */
+  .page-base {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--theme-page-bg);
+  }
+
+  /* 顶部导航栏 - 统一样式 */
+  .page-header {
+    background: var(--theme-header-gradient);
+    padding-top: calc(var(--status-bar-height, 0px) + 12px);
+    padding-bottom: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+    box-shadow: 0 8px 24px var(--theme-header-shadow);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .page-header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .page-back-btn {
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--theme-header-text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .page-back-btn:hover {
+    background: var(--theme-header-hover-bg);
+  }
+
+  .page-back-btn:active {
+    transform: scale(0.9);
+    background: var(--theme-header-hover-bg);
+  }
+
+  .page-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--theme-header-text-color);
+    letter-spacing: 1px;
+    margin: 0;
+    margin-left: 12px;
+    flex: 1;
+    text-align: left;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+
+  .page-actions {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-shrink: 0;
+  }
+
+  .page-action-btn {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--theme-header-text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .page-action-btn:hover {
+    opacity: 0.8;
+  }
+
+  .page-action-btn:active {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+
+  /* 内容滚动区域 - 统一样式 */
+  .page-content {
+    padding: 20px 16px;
+    flex: 1;
+    overflow: auto;
+  }
+
+  /* 底部导航栏 - 统一样式
+   * 注意：不使用 transform 居中，避免导致 background-attachment: fixed 失效
+   * 改用 left/right + margin-auto 实现水平居中，与顶部导航栏保持一致的定位行为 */
+  .page-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 480px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding-top: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 50;
+  }
+
+  .page-bottom-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    color: #B0A8A2;
+    cursor: pointer;
+    padding: 4px 16px;
+    transition: all 0.2s;
+  }
+
+  .page-bottom-active {
+    color: var(--theme-bottom-active-color);
+  }
+
+  .page-bottom-active svg {
+    filter: drop-shadow(0 0 4px var(--theme-bottom-active-glow));
+  }
+}
+
+/* 轻提示位置适配状态栏（必须在 @layer 外，否则优先级不够覆盖 inline style） */
+/* z-index 高于所有弹窗（EditDialog 9999 / 图例弹窗 10001），确保提示始终可见 */
+.el-message {
+  top: calc(var(--status-bar-height, 0px) + 56px + 8px) !important;
+  z-index: 10010 !important;
+}
+
+/* 弹窗打开时锁定底层页面滚动 */
+body.dialog-open {
+  overflow: hidden !important;
+}
+
+/* ========== 壁纸背景样式（必须在 @layer 外，确保优先级） ========== */
+
+/* 当有壁纸时，覆盖 .page-base 背景 - 使用 CSS 变量 + !important 确保优先级 */
+#app.has-wallpaper > .page-base,
+#app.has-wallpaper .page-base {
+    background-color: transparent !important;
+    background-image: var(--wallpaper-image, none) !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+}
+
+/* ========== 导航栏样式模式 ========== */
+
+/*
+ * 半透明模式（毛玻璃效果）- nav-translucent
+ * 全透明模式（伪透明，显示背景/壁纸）- nav-transparent
+ * 两种模式下导航栏文字都使用主题色
+ */
+
+/* ===== 半透明模式：毛玻璃效果 ===== */
+body.nav-translucent .page-header {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(10px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(180%) !important;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+body.nav-translucent .page-bottom-nav {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(10px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(180%) !important;
+}
+
+/* ===== 全局卡片阴影（无视模式，全局生效） ===== */
+/* 复用首页模块卡片的阴影效果 */
+.page-content .entry-card,
+.page-content .module-card-shadow,
+.page-content .statedetail-state-card,
+.page-content .action-btn,
+.page-content .create-backup-btn,
+.page-content .backup-card,
+.page-content .about-section {
+  box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.08), 1px 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* ===== 全局切换按钮阴影（无视模式，全局生效） ===== */
+/* 包括：字母映射页内置/自定义切换按钮、个性主题页透明模式切换按钮 */
+.page-content .tab-bar,
+.page-content .nav-mode-bar {
+  box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.08), 1px 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* ===== 全局字母成员展示位阴影 + 移除白色描边（无视模式，全局生效） ===== */
+.page-content .letter-preview {
+  border: none !important;
+  box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.08), 1px 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* 半透明模式：所有卡片毛玻璃效果
+ * 统一管理应用内所有需要半透明效果的元素
+ * 包括但不限于：
+ * - 首页模块卡片: .bg-card, .swipe-card, .module-card-shadow, .formula-card-wrapper
+ * - 状态集页面状态卡片: .state-card-wrapper, .set-item, .swipe-card.bg-card
+ * - 状态详情页状态展示卡片: .statedetail-state-card, .bg-card
+ * - 状态详情页公式卡片: .formula-card-wrapper, .card-visual-area, .swipe-card.bg-card
+ * - 公式卡片展开后的图片版公式面板: .image-formula-panel
+ * - 公式卡片展开后的图片版公式容器(内容区): .image-formula-display
+ * - 字母图片映射页字母成员图片展示位: .letter-preview (注意：不是 letter-item)
+ * - 占位图片/图标背景: .bg-gray-100 (首页模块、状态集卡片、状态卡片)
+ * - 切换按钮背景: .tab-bar, .nav-mode-bar
+ * - 数据管理页操作按钮: .action-btn (backup/export/import/reset)
+ * - 备份管理页创建备份卡片: .create-backup-btn, .backup-card
+ * - 设置页入口卡片: .entry-card
+ * - 关于页区块卡片: .about-section
+ * - 更新日志页卡片: .about-section
+ *
+ * 注意：由于 Vue 组件使用 scoped 样式（会生成 [data-v-xxx] 选择器），
+ * 这里使用多层选择器 + !important 确保优先级高于 scoped 样式
+ */
+
+/* ===== 通用卡片基础类 ===== */
+body.nav-translucent .page-content .bg-card,
+body.nav-translucent .page-content .swipe-card,
+body.nav-translucent .page-content .entry-card,
+
+/* ===== 首页模块卡片 ===== */
+/* 注意：.formula-card-wrapper 是定位上下文(无圆角)，不能给它加背景 */
+body.nav-translucent .page-content .module-card-shadow,
+
+/* ===== 占位图片/图标背景（首页模块、状态集卡片、状态卡片）===== */
+body.nav-translucent .page-content .bg-gray-100,
+
+/* ===== 状态集页面 - 状态卡片 ===== */
+/* 注意：.state-card-wrapper 是定位上下文(无圆角)，不能给它加背景 */
+/* 半透明必须作用于内部的 .swipe-card.bg-card (有圆角) */
+body.nav-translucent .page-content .state-card-wrapper .swipe-card.bg-card,
+body.nav-translucent .page-content .set-item,
+
+/* ===== 状态详情页 - 状态展示卡片和公式卡片 ===== */
+/* 注意：.formula-card-wrapper 和 .card-visual-area 都是定位上下文(无圆角) */
+/* 半透明必须作用于内部的 .swipe-card.bg-card (有圆角) */
+body.nav-translucent .page-content .statedetail-state-card,
+body.nav-translucent .page-content .statedetail-state-card.bg-card,
+body.nav-translucent .page-content .formula-card-wrapper .swipe-card.bg-card,
+
+/* ===== 公式卡片展开后的图片版公式面板+容器 ===== */
+body.nav-translucent .page-content .image-formula-panel,
+body.nav-translucent .page-content .image-formula-display,
+
+/* ===== 字母映射页 - 字母成员图片展示位背景（仅作用 letter-preview，不作用 letter-item）===== */
+body.nav-translucent .page-content .letter-preview,
+
+/* ===== 切换栏背景 ===== */
+body.nav-translucent .page-content .tab-bar,
+body.nav-translucent .page-content .nav-mode-bar,
+
+/* ===== 数据管理/备份管理操作按钮 ===== */
+body.nav-translucent .page-content .action-btn,
+body.nav-translucent .page-content .create-backup-btn,
+body.nav-translucent .page-content .backup-card,
+
+/* ===== 关于页/更新日志页区块卡片 ===== */
+body.nav-translucent .page-content .about-section {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(10px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(180%) !important;
+}
+
+/* ===== 半透明模式：占位图背景单独设为完全透明 ===== */
+/* 原因：下方卡片已是半透明效果，占位图不需要再次半透明，直接透明显示 */
+body.nav-translucent .page-content .bg-gray-100 {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ===== 半透明模式：图片版公式显示区域单独设为完全透明 ===== */
+/* 原因：外层 image-formula-panel 已是半透明，内层 display 不需要再次半透明 */
+body.nav-translucent .page-content .image-formula-display {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ===== 全透明模式：所有卡片完全透明 ===== */
+/* 与半透明模式覆盖相同的卡片列表，但背景设为完全透明 */
+/* 注意：不设置 box-shadow:none，保留全局卡片阴影效果 */
+body.nav-transparent .page-content .bg-card,
+body.nav-transparent .page-content .swipe-card,
+body.nav-transparent .page-content .entry-card,
+body.nav-transparent .page-content .module-card-shadow,
+/* 占位图片/图标背景 */
+body.nav-transparent .page-content .bg-gray-100,
+/* 状态集页面 */
+body.nav-transparent .page-content .state-card-wrapper .swipe-card.bg-card,
+body.nav-transparent .page-content .set-item,
+/* 状态详情页 */
+body.nav-transparent .page-content .statedetail-state-card,
+body.nav-transparent .page-content .statedetail-state-card.bg-card,
+body.nav-transparent .page-content .formula-card-wrapper .swipe-card.bg-card,
+/* 图片版公式 */
+body.nav-transparent .page-content .image-formula-panel,
+body.nav-transparent .page-content .image-formula-display,
+/* 字母映射页（仅 letter-preview，不含 letter-item）*/
+body.nav-transparent .page-content .letter-preview,
+/* 切换栏 */
+body.nav-transparent .page-content .tab-bar,
+body.nav-transparent .page-content .nav-mode-bar,
+/* 操作按钮 */
+body.nav-transparent .page-content .action-btn,
+body.nav-transparent .page-content .create-backup-btn,
+body.nav-transparent .page-content .backup-card,
+/* 关于页/更新日志页 */
+body.nav-transparent .page-content .about-section {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ===== 全透明模式：伪透明（显示页面背景/壁纸）===== */
+body.nav-transparent .page-header,
+body.nav-transparent .page-bottom-nav {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* 当有壁纸时，全透明模式下显示壁纸 */
+body.nav-transparent #app.has-wallpaper .page-header,
+body.nav-transparent #app.has-wallpaper .page-bottom-nav {
+  /* 使用与 page-base 相同的壁纸背景 */
+  background-image: var(--wallpaper-image, none) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  /* 调整背景位置以匹配视觉位置 */
+  background-attachment: fixed !important;
+}
+
+/* 当无壁纸时，全透明模式使用页面背景色 */
+body.nav-transparent:not(#app.has-wallpaper *) .page-header,
+body.nav-transparent:not(#app.has-wallpaper *) .page-bottom-nav {
+  background-color: var(--theme-page-bg) !important;
+}
+
+/* ===== 共用：半透明和全透明模式下的文字颜色 ===== */
+/* 统一控制顶部导航栏内所有元素的文字/图标颜色 */
+body.nav-translucent .page-header,
+body.nav-transparent .page-header {
+  color: var(--nav-text-color, #88C4CC) !important;
+}
+
+/* 确保所有按钮、标题、图标都继承主题色 */
+body.nav-translucent .page-header *,
+body.nav-transparent .page-header *,
+body.nav-translucent .page-header svg,
+body.nav-transparent .page-header svg {
+  color: var(--nav-text-color, #88C4CC) !important;
+}
+
+/* 悬停背景适配 */
+body.nav-translucent .page-header .page-back-btn:hover,
+body.nav-translucent .page-header .page-action-btn:hover,
+body.nav-transparent .page-header .page-back-btn:hover,
+body.nav-transparent .page-header .page-action-btn:hover {
+  background: rgba(0, 0, 0, 0.06) !important;
+}
